@@ -26,14 +26,14 @@ public class ReadingController {
         this.commandService = commandService;
     }
 
-    @PostMapping(value = "device/readings", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/device/readings", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<CommandResponseDto> saveReading(ReadingRequestDto readingRequestDto) {
 
         return new ResponseEntity<>(readingService.saveAndReturnLatestCommand(readingRequestDto),
                 HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "user/readings/{deviceId}")
+    @GetMapping(value = "/user/readings/{deviceId}")
     public ResponseEntity<ReadingResponseDto> getById(@PathVariable(value = "deviceId") String deviceId) {
         return new ResponseEntity<>(readingService.getLastReadingByDeviceId(deviceId),
                 HttpStatus.OK);

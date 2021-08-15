@@ -37,8 +37,12 @@ public class ReadingService implements IReadingService {
     public CommandResponseDto saveAndReturnLatestCommand(ReadingRequestDto readingRequestDto) {
 
             save(readingRequestDto);
-            return commandService.getUnExecutedLastCommandByDeviceId(readingRequestDto.getDeviceId());
-
+            try{
+                return commandService.getUnExecutedLastCommandByDeviceId(readingRequestDto.getDeviceId());
+            } catch (NoRecordFoundException e){
+                log.error("Error in save and return latest command", e);
+            }
+            return null;
     }
 
     @Override

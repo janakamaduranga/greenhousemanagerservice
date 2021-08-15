@@ -24,14 +24,14 @@ public class CommandController {
         this.commandService = commandService;
     }
 
-    @PostMapping(value = "user/commands", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/user/commands", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Void> saveCommand(CommandRequestDto commandRequestDto) {
         isValid(commandRequestDto);
         commandService.save(commandRequestDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "device/commands/{deviceId}")
+    @GetMapping(value = "/device/commands/{deviceId}")
     public ResponseEntity<CommandResponseDto> findByDeviceId(@PathVariable(required = true) String deviceId) {
         return new ResponseEntity<>(commandService.getUnExecutedLastCommandByDeviceId(deviceId),
                 HttpStatus.OK);
