@@ -8,11 +8,15 @@ import com.green.house.manager.greenhousemanagerservice.repo.CommandRepo;
 import com.green.house.manager.greenhousemanagerservice.util.Mapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.math.BigInteger;
 import java.util.List;
 
 @Service
+@Transactional(transactionManager = "MONGO_TXN_MGR")
+@CrossOrigin
 public class CommandService implements ICommandService {
     private final CommandRepo commandRepo;
 

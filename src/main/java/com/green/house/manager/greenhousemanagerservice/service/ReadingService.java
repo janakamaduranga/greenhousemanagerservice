@@ -12,11 +12,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.math.BigInteger;
 
 @Slf4j
 @Service
+@Transactional(transactionManager = "MONGO_TXN_MGR")
+@CrossOrigin
 public class ReadingService implements IReadingService {
     private final ReadingRepo readingRepository;
     private final CommandService commandService;
@@ -33,7 +36,7 @@ public class ReadingService implements IReadingService {
                 readingRepository.save(Mapper.getReadingByReadingRequestDto(reading)));
     }
 
-    @Override
+     @Override
     public CommandResponseDto saveAndReturnLatestCommand(ReadingRequestDto readingRequestDto) {
 
             save(readingRequestDto);
