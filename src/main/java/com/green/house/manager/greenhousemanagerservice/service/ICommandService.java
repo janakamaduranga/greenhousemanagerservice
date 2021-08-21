@@ -10,5 +10,7 @@ public interface ICommandService {
 
     CommandResponseDto getUnExecutedLastCommandByDeviceId(String deviceId);
 
+    CommandResponseDto getUnExecutedLastCommandByDeviceIdNoException(String deviceId);
+
     CommandResponseDto findByDeviceId(String deviceId);
 }

@@ -8,10 +8,7 @@ import com.green.house.manager.greenhousemanagerservice.service.CommandService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
 
@@ -24,8 +21,8 @@ public class CommandController {
         this.commandService = commandService;
     }
 
-    @PostMapping(value = "/user/commands", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Void> saveCommand(CommandRequestDto commandRequestDto) {
+    @PostMapping(value = "/user/commands")
+    public ResponseEntity<Void> saveCommand(@RequestBody CommandRequestDto commandRequestDto) {
         isValid(commandRequestDto);
         commandService.save(commandRequestDto);
         return new ResponseEntity<>(HttpStatus.CREATED);

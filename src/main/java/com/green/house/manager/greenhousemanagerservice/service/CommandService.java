@@ -46,6 +46,16 @@ public class CommandService implements ICommandService {
     }
 
     @Override
+    public CommandResponseDto getUnExecutedLastCommandByDeviceIdNoException(String deviceId){
+        List<Command> commands = commandRepo.findByDeviceIdAndExecuted
+                (deviceId, false, PageRequest.of(0, 1));
+        if (commands != null && commands.size() > 0) {
+            return Mapper.getCommandResponseDto(commands.get(0));
+        }
+        return null;
+    }
+
+    @Override
     public CommandResponseDto findByDeviceId(String deviceId) {
         Command command = commandRepo.findByDeviceId
                 (deviceId);
