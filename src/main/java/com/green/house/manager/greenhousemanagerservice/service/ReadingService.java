@@ -4,10 +4,12 @@ import com.green.house.manager.greenhousemanagerservice.dtos.CommandResponseDto;
 import com.green.house.manager.greenhousemanagerservice.dtos.ReadingRequestDto;
 import com.green.house.manager.greenhousemanagerservice.dtos.ReadingResponseDto;
 import com.green.house.manager.greenhousemanagerservice.exception.NoRecordFoundException;
+import com.green.house.manager.greenhousemanagerservice.model.Command;
 import com.green.house.manager.greenhousemanagerservice.model.Reading;
 import com.green.house.manager.greenhousemanagerservice.repo.ReadingRepo;
 import com.green.house.manager.greenhousemanagerservice.util.Mapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.math.BigInteger;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -53,8 +56,9 @@ public class ReadingService implements IReadingService {
     @Override
     public ReadingResponseDto getLastReadingByDeviceId(String deviceId) {
         Reading reading = readingRepository.findTopByDeviceIdOrderByCreatedTimeDesc(deviceId);
+        CommandResponseDto commandDto = commandService.getUnExecutedLastCommandByDeviceId(deviceId);
         if (reading != null) {
-            return Mapper.getReadingResponseDto(reading);
+            return Mapper.getReadingResponseDto(reading, commandDto);
         }
         throw new NoRecordFoundException();
     }

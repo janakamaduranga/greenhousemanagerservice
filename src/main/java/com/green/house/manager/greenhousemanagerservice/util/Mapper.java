@@ -15,6 +15,21 @@ public class Mapper {
 
         readingResponseDto.setDeviceId(reading.getDeviceId());
         readingResponseDto.setHumidity(reading.getHumidity());
+        readingResponseDto.setTemperature(reading.getTemperature());
+
+        return readingResponseDto;
+    }
+
+    public static ReadingResponseDto getReadingResponseDto(Reading reading, CommandResponseDto commandResponseDto) {
+        ReadingResponseDto readingResponseDto = new ReadingResponseDto();
+
+        readingResponseDto.setDeviceId(reading.getDeviceId());
+        readingResponseDto.setHumidity(reading.getHumidity());
+        readingResponseDto.setTemperature(reading.getTemperature());
+
+        if(commandResponseDto != null){
+            readingResponseDto.setActions(commandResponseDto.getActions());
+        }
 
         return readingResponseDto;
     }
